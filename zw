@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Harmonogram</title>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    google.charts.load('current', {'packages':['table']});
+    google.charts.setOnLoadCallback(drawTable);
+
+    function drawTable() {
+      var queryString = encodeURIComponent('SELECT C, D, E, F, G, H'); // kolumny C–H
+      var query = new google.visualization.Query(
+        'https://docs.google.com/spreadsheets/d/1QH3NWatRNV0xqwcMCv6zSZUDrHN7kOdsKhZ5W-V1A5w/gviz/tq?sheet=Arkusz1&tq=' + queryString
+      );
+
+      query.send(function(response) {
+        var data = response.getDataTable();
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+        table.draw(data, {
+          showRowNumber: true,
+          width: '100%',
+          height: 'auto'
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <h2>Harmonogram</h2>
+  <div id="table_div"></div>
+</body>
+</html>
